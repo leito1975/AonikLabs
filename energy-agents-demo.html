@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AonikLabs - Agentes de IA para Industria Energética</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-south: #0D2137;
+            --glacial-blue: #1B6CA8;
+            --andean-gold: #C47D2A;
+            --light-blue: #2D8FD6;
+            --muted: #94A3B8;
+            --text-light: #E8EFF5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-south);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0a1929 0%, #0D2137 100%);
+            border-bottom: 1px solid rgba(27, 108, 168, 0.2);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-aonik {
+            color: var(--text-light);
+        }
+
+        .logo-labs {
+            color: var(--light-blue);
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--andean-gold);
+        }
+
+        nav a.active {
+            color: var(--light-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0D2137 0%, #0F2F4A 50%, #0D2137 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(27, 108, 168, 0.2);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(0deg, transparent 24%, rgba(27, 108, 168, 0.05) 25%, rgba(27, 108, 168, 0.05) 26%, transparent 27%, transparent 74%, rgba(27, 108, 168, 0.05) 75%, rgba(27, 108, 168, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(27, 108, 168, 0.05) 25%, rgba(27, 108, 168, 0.05) 26%, transparent 27%, transparent 74%, rgba(27, 108, 168, 0.05) 75%, rgba(27, 108, 168, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--light-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--muted);
+            margin-bottom: 3rem;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(27, 108, 168, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(27, 108, 168, 0.2);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--andean-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Section Container */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        /* Agent Grid */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Agent Card */
+        .agent-card {
+            background: linear-gradient(135deg, rgba(27, 108, 168, 0.1) 0%, rgba(196, 125, 42, 0.05) 100%);
+            border: 1px solid rgba(27, 108, 168, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(196, 125, 42, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .agent-card:hover {
+            border-color: rgba(196, 125, 42, 0.5);
+            background: linear-gradient(135deg, rgba(27, 108, 168, 0.15) 0%, rgba(196, 125, 42, 0.1) 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(196, 125, 42, 0.1);
+        }
+
+        .agent-card:hover::before {
+            left: 100%;
+        }
+
+        .agent-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(196, 125, 42, 0.2);
+            border: 2px solid var(--andean-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .agent-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-description {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .agent-metrics-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .agent-metric-mini {
+            font-size: 0.85rem;
+        }
+
+        .agent-metric-label {
+            display: block;
+            color: var(--muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .agent-metric-value {
+            display: block;
+            color: var(--andean-gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .agent-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-chip {
+            background: rgba(27, 108, 168, 0.3);
+            color: var(--light-blue);
+            padding: 0.35rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(27, 108, 168, 0.5);
+        }
+
+        .btn-simulate {
+            background: linear-gradient(135deg, var(--glacial-blue), var(--light-blue));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .btn-simulate:hover {
+            background: linear-gradient(135deg, var(--light-blue), var(--andean-gold));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(27, 108, 168, 0.3);
+        }
+
+        .btn-simulate:active {
+            transform: translateY(0);
+        }
+
+        /* Simulation Panel */
+        .simulation-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(13, 33, 55, 0.95) 0%, rgba(15, 47, 74, 0.95) 100%);
+            border: 1px solid rgba(27, 108, 168, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .simulation-panel.active {
+            display: block;
+            max-height: 1000px;
+        }
+
+        .simulation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--andean-gold);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .terminal {
+            background: #000;
+            border: 1px solid rgba(45, 143, 214, 0.3);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #0f0;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInLine 0.3s ease forwards;
+        }
+
+        @keyframes fadeInLine {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terminal-prompt {
+            color: #0f0;
+        }
+
+        .terminal-command {
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        .terminal-output {
+            color: #90EE90;
+        }
+
+        .terminal-alert {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        .terminal-success {
+            color: #51CF66;
+        }
+
+        .terminal-info {
+            color: #74C0FC;
+        }
+
+        .simulation-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-reset {
+            background: rgba(196, 125, 42, 0.2);
+            color: var(--andean-gold);
+            border: 1px solid rgba(196, 125, 42, 0.4);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background: rgba(196, 125, 42, 0.3);
+        }
+
+        /* Why Now Section */
+        .why-now {
+            background: linear-gradient(135deg, rgba(27, 108, 168, 0.08) 0%, rgba(196, 125, 42, 0.04) 100%);
+            border: 1px solid rgba(27, 108, 168, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+
+        .why-now h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+
+        .why-reasons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .reason {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .reason-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(196, 125, 42, 0.2);
+            border: 2px solid var(--andean-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .reason-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--light-blue);
+        }
+
+        .reason-content p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Footer/CTA */
+        footer {
+            background: linear-gradient(135deg, #0a1929 0%, #0D2137 100%);
+            border-top: 1px solid rgba(27, 108, 168, 0.2);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-cta {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .footer-cta h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .footer-cta p {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .footer-link {
+            color: var(--light-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--andean-gold);
+        }
+
+        .btn-cta {
+            background: linear-gradient(135deg, var(--andean-gold), #E89844);
+            color: #0D2137;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(196, 125, 42, 0.3);
+        }
+
+        .footer-info {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(27, 108, 168, 0.2);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-info p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            nav {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .why-now {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(27, 108, 168, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(27, 108, 168, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(27, 108, 168, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div>
+                <div class="logo">
+                    <span class="logo-aonik">AONIK</span><span class="logo-labs">LABS</span>
+                </div>
+                <span class="tagline">Applied Technology Think Tank</span>
+            </div>
+            <nav>
+                <a href="#agente1" class="nav-link">Inspector Autónomo</a>
+                <a href="#agente2" class="nav-link">Cumplimiento Regulatorio</a>
+                <a href="#agente3" class="nav-link">Optimizador de Producción</a>
+                <a href="#por-que" class="nav-link">¿Por qué ahora?</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Agentes de IA para la Industria Energética</h1>
+            <p>Del monitoreo reactivo a la operación autónoma</p>
+            <div class="metrics">
+                <div class="metric">
+                    <span class="metric-value">3</span>
+                    <span class="metric-label">Agentes Activos</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">340+</span>
+                    <span class="metric-label">Requisitos Monitoreados</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">+12%</span>
+                    <span class="metric-label">Incremento de Producción</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">8min</span>
+                    <span class="metric-label">Tiempo de Respuesta</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agentes Section -->
+    <section class="section">
+        <h2 class="section-title">Nuestros Agentes Activos</h2>
+        <div class="agents-grid">
+            <!-- Agente 1: Inspector de Integridad -->
+            <div class="agent-card" id="agente1">
+                <div class="agent-icon">🔍</div>
+                <h3 class="agent-name">Inspector de Integridad</h3>
+                <p class="agent-description">Análisis autónomo de sensores de tuberías y pozos. Detecta anomalías en tiempo real y genera órdenes de inspección inmediatas.</p>
+
+                <div class="agent-metrics-mini">
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Tiempo Anterior</span>
+                        <span class="agent-metric-value">4 horas</span>
+                    </div>
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Tiempo Actual</span>
+                        <span class="agent-metric-value">8 minutos</span>
+                    </div>
+                </div>
+
+                <div class="agent-tech">
+                    <span class="tech-chip">LLM</span>
+                    <span class="tech-chip">RAG</span>
+                    <span class="tech-chip">Tool Use</span>
+                    <span class="tech-chip">Time Series</span>
+                </div>
+
+                <button class="btn-simulate" onclick="toggleSimulation('sim-agente1')">Ejecutar Simulación →</button>
+
+                <div class="simulation-panel" id="sim-agente1">
+                    <div class="simulation-title">Ejecución en Vivo</div>
+                    <div class="terminal" id="terminal-1"></div>
+                    <div class="simulation-controls">
+                        <button class="btn-reset" onclick="resetSimulation('sim-agente1', 'terminal-1')">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agente 2: Cumplimiento Regulatorio -->
+            <div class="agent-card" id="agente2">
+                <div class="agent-icon">⚖️</div>
+                <h3 class="agent-name">Cumplimiento Regulatorio</h3>
+                <p class="agent-description">Monitoreo continuo de requisitos de ENARGAS, Secretaría de Energía y normas internacionales. Genera alertas y planes de remediación automáticos.</p>
+
+                <div class="agent-metrics-mini">
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Requisitos Gestionados</span>
+                        <span class="agent-metric-value">340+</span>
+                    </div>
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Equipo Tradicional</span>
+                        <span class="agent-metric-value">2 personas</span>
+                    </div>
+                </div>
+
+                <div class="agent-tech">
+                    <span class="tech-chip">RAG</span>
+                    <span class="tech-chip">Multi-agent</span>
+                    <span class="tech-chip">Knowledge Base</span>
+                    <span class="tech-chip">Alertas</span>
+                </div>
+
+                <button class="btn-simulate" onclick="toggleSimulation('sim-agente2')">Ejecutar Simulación →</button>
+
+                <div class="simulation-panel" id="sim-agente2">
+                    <div class="simulation-title">Ejecución en Vivo</div>
+                    <div class="terminal" id="terminal-2"></div>
+                    <div class="simulation-controls">
+                        <button class="btn-reset" onclick="resetSimulation('sim-agente2', 'terminal-2')">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agente 3: Optimizador de Producción -->
+            <div class="agent-card" id="agente3">
+                <div class="agent-icon">📈</div>
+                <h3 class="agent-name">Optimizador de Producción</h3>
+                <p class="agent-description">Análisis en tiempo real de parámetros operativos (caudal, presión, temperatura). Propone ajustes autónomos para maximizar producción.</p>
+
+                <div class="agent-metrics-mini">
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Incremento Base</span>
+                        <span class="agent-metric-value">7-12%</span>
+                    </div>
+                    <div class="agent-metric-mini">
+                        <span class="agent-metric-label">Integración</span>
+                        <span class="agent-metric-value">SCADA/ERP</span>
+                    </div>
+                </div>
+
+                <div class="agent-tech">
+                    <span class="tech-chip">ML</span>
+                    <span class="tech-chip">Real-time</span>
+                    <span class="tech-chip">Control</span>
+                    <span class="tech-chip">Predictive</span>
+                </div>
+
+                <button class="btn-simulate" onclick="toggleSimulation('sim-agente3')">Ejecutar Simulación →</button>
+
+                <div class="simulation-panel" id="sim-agente3">
+                    <div class="simulation-title">Ejecución en Vivo</div>
+                    <div class="terminal" id="terminal-3"></div>
+                    <div class="simulation-controls">
+                        <button class="btn-reset" onclick="resetSimulation('sim-agente3', 'terminal-3')">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Now Section -->
+    <section class="section" id="por-que">
+        <h2 class="section-title">¿Por Qué Ahora?</h2>
+        <div class="why-now">
+            <div class="why-reasons">
+                <div class="reason">
+                    <div class="reason-icon">⏰</div>
+                    <div class="reason-content">
+                        <h3>Ventana de Adopción Temprana</h3>
+                        <p>Las empresas que adopten agentes de IA en 2025-2026 tendrán ventaja competitiva estructural. La brecha se ampliará exponencialmente en los próximos años.</p>
+                    </div>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-icon">📋</div>
+                    <div class="reason-content">
+                        <h3>Regulación ISO 42001</h3>
+                        <p>La norma ISO 42001 sobre Gestión de IA está en vigencia. Estar preparado hoy significa conformidad y riesgo mitigado mañana.</p>
+                    </div>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-icon">📊</div>
+                    <div class="reason-content">
+                        <h3>Escala de Vaca Muerta</h3>
+                        <p>El crecimiento exponencial en Vaca Muerta requiere escalar operaciones sin escalar headcount. Los agentes autónomos son el multiplicador de productividad.</p>
+                    </div>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-icon">🤖</div>
+                    <div class="reason-content">
+                        <h3>Madurez Tecnológica</h3>
+                        <p>Modelos de lenguaje, Tool Use y agentes multi-turno ya son suficientemente robustos para operaciones críticas en energía.</p>
+                    </div>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-icon">💰</div>
+                    <div class="reason-content">
+                        <h3>ROI Comprobado</h3>
+                        <p>Casos reales: 50x mejora en tiempo de respuesta, 340 requisitos gestionados por un agente, +12% producción con activos existentes.</p>
+                    </div>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-icon">🚀</div>
+                    <div class="reason-content">
+                        <h3>Operación Continua</h3>
+                        <p>Los agentes no se fatigan, no se toman vacaciones, no cometen errores por distracción. 24/7 operación autónoma confiable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer/CTA -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-cta">
+                <h2>¿Querés explorar qué agentes son relevantes para tu operación?</h2>
+                <p>Conversemos sobre cómo automatizar tus procesos críticos</p>
+                <button class="btn-cta" onclick="openContact()">Agendar Conversación</button>
+            </div>
+
+            <div class="footer-links">
+                <a href="mailto:hola@aoniklabs.com" class="footer-link">hola@aoniklabs.com</a>
+                <a href="https://aoniklabs.com" class="footer-link">aoniklabs.com</a>
+                <a href="#" class="footer-link">LinkedIn</a>
+            </div>
+
+            <div class="footer-info">
+                <p><strong>AonikLabs</strong> — Applied Technology Think Tank</p>
+                <p>Agentes de IA para la industria energética | Evento Mayo 2026 - Neuquén</p>
+                <p>Presentador: Leonardo Fragola, Fundador de AonikLabs</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simulación 1: Inspector de Integridad
+        const simulacion1 = [
+            { text: "$ aonik-inspector --mode=autonomous --interval=30s", type: "command" },
+            { text: "Iniciando Inspector de Integridad Autónomo...", type: "info" },
+            { text: "", type: "output" },
+            { text: "[POZO-VMA-015] Leyendo sensores de presión...", type: "output" },
+            { text: "[POZO-VMA-015] Presión: 142.3 bar | Histórico: 138-141 bar", type: "output" },
+            { text: "", type: "output" },
+            { text: "[⚠️  ANOMALÍA DETECTADA] Presión fuera de rango en POZO-VMA-015", type: "alert" },
+            { text: "[POZO-VMA-015] Análisis de raíz causa: Posible restricción parcial en cabezal", type: "output" },
+            { text: "", type: "output" },
+            { text: "[GENERANDO] Orden de Inspección HSE-2024-0847", type: "info" },
+            { text: "[NOTIFICANDO] Equipo de Mantenimiento vía sistema", type: "success" },
+            { text: "[SCHEDULING] Inspección programada: HOY 14:30 hs", type: "success" },
+            { text: "", type: "output" },
+            { text: "Tiempo de respuesta: 8 minutos 34 segundos", type: "success" },
+            { text: "Mejora vs. proceso anterior: 97.5%", type: "success" },
+            { text: "", type: "output" },
+            { text: "Inspector listo para siguiente análisis...", type: "info" }
+        ];
+
+        // Simulación 2: Cumplimiento Regulatorio
+        const simulacion2 = [
+            { text: "$ aonik-compliance --entity=Operador-VMA --check=full", type: "command" },
+            { text: "Analizando 340+ requisitos regulatorios...", type: "info" },
+            { text: "", type: "output" },
+            { text: "[ENARGAS] Resolución 37/2023 - Reportes de emisiones", type: "output" },
+            { text: "└─ Estado: ✓ CUMPLE | Próximo vencimiento: 15 días", type: "success" },
+            { text: "", type: "output" },
+            { text: "[SECRETARÍA DE ENERGÍA] Decreto 407/2023 - Reservas demostradas", type: "output" },
+            { text: "└─ Estado: ✓ CUMPLE | Documentación: Vigente", type: "success" },
+            { text: "", type: "output" },
+            { text: "[ISO 42001] Governance de IA - Documentación requerida", type: "output" },
+            { text: "└─ Estado: ⚠️  REQUIERE ACCIÓN | Fecha límite: 30 días", type: "alert" },
+            { text: "[GENERANDO] Plan de Remediación ISO-42001-REM-0312", type: "info" },
+            { text: "[ASIGNANDO] Tareas al equipo de Compliance", type: "success" },
+            { text: "", type: "output" },
+            { text: "Resumen: 325 requisitos cumplidos, 15 en análisis", type: "output" },
+            { text: "Próximo scan automático: en 24 horas", type: "info" },
+            { text: "", type: "output" },
+            { text: "Equivalente a 1.5 FTE de trabajo de compliance", type: "success" }
+        ];
+
+        // Simulación 3: Optimizador de Producción
+        const simulacion3 = [
+            { text: "$ aonik-optimizer --mode=realtime --target=max-production", type: "command" },
+            { text: "Conectando a sistemas SCADA y ERP...", type: "info" },
+            { text: "", type: "output" },
+            { text: "[POZO-VMA-042] Caudal actual: 487 bbl/d | Presión: 135 bar | Temp: 48°C", type: "output" },
+            { text: "[ANÁLISIS] Comparando vs. histórico de 6 meses...", type: "output" },
+            { text: "", type: "output" },
+            { text: "[OPORTUNIDAD] Presión en choker suboptimizada", type: "info" },
+            { text: "[PREDICCIÓN] Ajuste a 138.5 bar → Caudal +8.2%", type: "output" },
+            { text: "[SIMULACIÓN] Validando cambio sin riesgo operativo...", type: "output" },
+            { text: "", type: "output" },
+            { text: "[EJECUCIÓN] Enviando comando a sistema de control", type: "success" },
+            { text: "[MONITOREO] Cambio de parámetros en progreso...", type: "info" },
+            { text: "[✓ ÉXITO] Nuevo caudal: 527 bbl/d (+8.2%)", type: "success" },
+            { text: "", type: "output" },
+            { text: "Ganancia: +40 bbl/d sin capex adicional", type: "success" },
+            { text: "Optimizaciones en 24h: 12 | Producción acumulada: +2,847 bbl", type: "success" },
+            { text: "", type: "output" },
+            { text: "Siguiente análisis de oportunidades en 4 horas...", type: "info" }
+        ];
+
+        // Funciones de simulación
+        function toggleSimulation(panelId) {
+            const panel = document.getElementById(panelId);
+            const terminal = panel.querySelector('.terminal');
+
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            } else {
+                panel.classList.add('active');
+                if (terminal.children.length === 0) {
+                    runSimulation(panelId);
+                }
+            }
+        }
+
+        function runSimulation(panelId) {
+            const terminal = document.getElementById(panelId).querySelector('.terminal');
+            let simulationData = [];
+
+            if (panelId === 'sim-agente1') {
+                simulationData = simulacion1;
+            } else if (panelId === 'sim-agente2') {
+                simulationData = simulacion2;
+            } else if (panelId === 'sim-agente3') {
+                simulationData = simulacion3;
+            }
+
+            terminal.innerHTML = '';
+            simulationData.forEach((line, index) => {
+                setTimeout(() => {
+                    const lineEl = document.createElement('div');
+                    lineEl.className = 'terminal-line';
+
+                    if (line.text === '') {
+                        lineEl.innerHTML = '<br>';
+                    } else if (line.type === 'command') {
+                        lineEl.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-command">${escapeHtml(line.text)}</span>`;
+                    } else if (line.type === 'alert') {
+                        lineEl.innerHTML = `<span class="terminal-alert">${escapeHtml(line.text)}</span>`;
+                    } else if (line.type === 'success') {
+                        lineEl.innerHTML = `<span class="terminal-success">${escapeHtml(line.text)}</span>`;
+                    } else if (line.type === 'info') {
+                        lineEl.innerHTML = `<span class="terminal-info">${escapeHtml(line.text)}</span>`;
+                    } else {
+                        lineEl.innerHTML = `<span class="terminal-output">${escapeHtml(line.text)}</span>`;
+                    }
+
+                    terminal.appendChild(lineEl);
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, index * 150);
+            });
+        }
+
+        function resetSimulation(panelId, terminalId) {
+            const terminal = document.getElementById(terminalId);
+            terminal.innerHTML = '';
+            runSimulation(panelId);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function openContact() {
+            window.location.href = 'mailto:hola@aoniklabs.com?subject=Interesado en Agentes de IA - Evento Neuquén Mayo 2026';
+        }
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const element = document.querySelector(href);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        updateActiveNav();
+                    }
+                }
+            });
+        });
+
+        function updateActiveNav() {
+            const sections = ['agente1', 'agente2', 'agente3', 'por-que'];
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                const navLink = document.querySelector(`nav a[href="#${id}"]`);
+
+                if (element) {
+                    const elementPosition = element.offsetTop;
+                    const elementHeight = element.offsetHeight;
+
+                    if (scrollPosition >= elementPosition && scrollPosition < elementPosition + elementHeight) {
+                        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                        navLink.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+    </script>
+</body>
+</html>
